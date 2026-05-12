@@ -19,38 +19,63 @@ body {
   background-color: #fff;
   display: flex;
   align-items: center;
-  padding: 0 40px;
+  padding: 20 50px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   border-bottom: 0.1rem solid #ccc;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
-.navbar img {
+.navbar .logo {
+  flex-shrink: 0;
+}
+
+.navbar .logo img {
   width: 100px;
-  margin-right: 30px;
+  display: block;
 }
 
-.navbar ul {
+.navbar-teks {
   list-style: none;
   display: flex;
   margin: 0;
   padding: 0;
+  gap: 5px;
   flex-wrap: wrap;
 }
 
-.navbar li {
+.navbar-teks li {
   position: relative;
-  margin-right: 25px;
 }
 
-.navbar a {
+.navbar-teks li a {
   text-decoration: none;
-  color: black;
+  color: #85888a;
+  font-weight: 550;
   padding: 10px;
   display: block;
+  transition: color 0.3s ease;
+  position: relative;
 }
 
-.navbar li ul {
+.navbar-teks li a::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  bottom: 0;
+  width: calc(100% - 20px);
+  height: 2px;
+  background-color: #e30613;
+  transition: width 0.3s ease-in-out;
+  width: 0;
+  margin-bottom: 10px;
+}
+
+.navbar-teks li a:hover::after {
+  width: calc(100% - 20px);
+}
+
+.navbar-teks li ul {
   position: absolute;
   top: 100%;
   left: 0;
@@ -59,63 +84,32 @@ body {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 100;
   min-width: 160px;
-}
-
-.navbar li:hover ul {
-  display: block;
-  color: black;
-}
-
-.navbar li ul li {
+  list-style: none;
+  padding: 0;
   margin: 0;
 }
 
-.navbar li ul a {
+.navbar-teks li:hover ul {
+  display: block;
+}
+
+.navbar-teks li ul li {
+  margin: 0;
+}
+
+.navbar-teks li ul li a {
   padding: 10px 15px;
   white-space: nowrap;
+  font-weight: normal;
 }
 
-.navbar li ul a:hover {
-  color: #444;
+.navbar-teks li ul li a::after {
+  display: none;
 }
 
-.navbar-teks {
-  list-style: none;
-  display: flex;
-  gap: 5px;
-  margin-left: 20px;
-  flex-wrap: wrap;
-}
-
-.navbar-teks li a {
-  text-decoration: none;
-  color: #949799;
-  font-weight: lighter;
-  transition: color 0.3s;
-}
-
-.navbar-teks li a {
-  position: relative;
-  text-decoration: none;
-  color: #85888a;
-  font-weight: 550;
-  padding-bottom: 6px;
-  transition: color 0.3s ease;
-}
-
-.navbar-teks li a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0%;
-  height: 2px;
-  background-color: #e30613;
-  transition: width 0.3s ease-in-out;
-}
-
-.navbar-teks li a:hover::after {
-  width: 100%;
+.navbar-teks li ul li a:hover {
+  background-color: #f5f5f5;
+  color: #e30613;
 }
 
 .navbar-icon {
@@ -123,7 +117,8 @@ body {
   align-items: center;
   gap: 20px;
   margin-left: auto;
-  flex-wrap: wrap;
+  flex-shrink: 0;
+  margin-right: 5px;
 }
 
 .search-kotak {
@@ -153,13 +148,19 @@ body {
   border: none;
   cursor: pointer;
   color: #e30613;
+  display: flex;
+  align-items: center;
+}
+
+.search-kotak button i {
+  width: 18px;
+  height: 18px;
 }
 
 .navbar-icon1 {
   display: flex;
   align-items: center;
   gap: 15px;
-  flex-wrap: wrap;
 }
 
 .navbar-icon1 a {
@@ -171,31 +172,9 @@ body {
   font-size: 14px;
 }
 
-.collab-select {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.collab-select label {
-  color: black;
-  font-weight: bold;
-  font-size: 14px;
-}
-
-.collab-select select {
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  background-color: #fff;
-  color: #333;
-  font-size: 14px;
-  cursor: pointer;
-  transition: border 0.3s ease;
-}
-
-.collab-select select:hover {
-  border-color: #e30613;
+.navbar-icon1 a i {
+  width: 18px;
+  height: 18px;
 }
 
 /* landing page */
@@ -848,616 +827,644 @@ body {
   justify-content: center;
 }
 
-/* ========== MEDIA QUERIES ========== */
+/*humberger menu*/
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+  padding: 10px;
+  z-index: 1000;
+  order: 3;
+  flex-shrink: 0;
+}
 
-/* Large Desktop (1200px and below) */
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  transition: all 0.3s ease-in-out;
+  border-radius: 3px;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -6px);
+}
+
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  display: none;
+}
+
+.menu-overlay.active {
+  display: block;
+}
+
+/*media queris*/
+
 @media (max-width: 1200px) {
   .new-arrivals {
     padding: 5px 100px;
   }
-  
+
   .kategori {
     margin-left: 100px;
     margin-right: 100px;
   }
-  
+
   .produk-info {
     margin-left: auto;
     margin-right: auto;
     text-align: right;
   }
-  
+
   .featured-container {
     height: 600px;
   }
-  
+
   .featured-container1 {
     height: 400px;
   }
 }
 
-/* Desktop (992px and below) */
 @media (max-width: 992px) {
-  .navbar {
-    padding: 15px 20px;
-    flex-direction: column;
-    gap: 15px;
+
+  .navbar-teks li a {
+    position: relative;
+    display: inline-block;
+    transition: color 0.3s ease;
   }
-  
-  .navbar img {
-    margin-right: 0;
+
+  .navbar-teks li a:hover {
+    color: #e30613;
   }
-  
-  .navbar-icon {
-    margin-left: 0;
-    justify-content: center;
+
+  .navbar-teks li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #e30613;
+    transition: width 0.3s ease-in-out;
+    margin-bottom: 10px;
+  }
+
+  .navbar-teks li a:hover::after {
     width: 100%;
   }
-  
+
+  .navbar-teks li ul li a {
+    position: relative;
+    display: inline-block;
+  }
+
+  .navbar-teks li ul li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #e30613;
+    transition: width 0.3s ease-in-out;
+  }
+
+  .navbar-teks li ul li a:hover::after {
+    width: 100%;
+  }
+
+  .navbar-teks li ul li a:hover {
+    background-color: #f5f5f5;
+    color: #e30613;
+  }
+
+  .produk-info {
+    text-align: right;
+    margin-right: auto;
+    margin-right: 20px;
+    width: fit-content;
+    margin-top: 0px;
+  }
+
+  .navbar {
+    padding: 10px 20px;
+    gap: 15px;
+  }
+
   .navbar-teks {
-    margin-left: 0;
-    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 320px;
+    height: 100vh;
+    background-color: #fff;
+    flex-direction: column;
+    padding: 80px 20px 30px 25px;
+    margin: 0;
+    gap: 0;
+    transition: left 0.3s ease-in-out;
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    overflow-y: auto;
+    display: flex !important;
   }
-  
-  .navbar ul {
-    justify-content: center;
-    flex-wrap: wrap;
+
+  .navbar-teks.active {
+    left: 0;
   }
-  
+
+  .navbar-teks li {
+    margin-right: 0;
+    width: 100%;
+  }
+
+  .navbar-teks li a {
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: 550;
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid #eee;
+  }
+
+  .navbar-teks li a::after {
+    display: none;
+  }
+
+  .navbar-teks li ul {
+    position: static;
+    display: none;
+    background-color: #f5f5f5;
+    box-shadow: none;
+    padding-left: 15px;
+    margin-top: 0;
+    width: 100%;
+    box-shadow: none;
+  }
+
+  .navbar-teks li ul li a {
+    padding: 10px 0;
+    font-size: 14px;
+    border-bottom: none;
+  }
+
+  .navbar-teks li.active-dropdown>ul {
+    display: block;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .navbar-icon1 a span {
+    display: none;
+  }
+
+  .search-kotak {
+    padding: 4px 8px;
+  }
+
+  .search-kotak input {
+    width: 140px;
+    font-size: 12px;
+  }
+
+  .search-kotak input::placeholder {
+    font-size: 10px;
+  }
+
   .new-arrivals {
     padding: 5px 50px;
   }
-  
+
   .featured-title {
     padding-left: 30px;
     font-size: 1.2rem;
   }
-  
+
   .featured-container {
     height: 500px;
   }
-  
+
   .featured-container1 {
     height: 350px;
   }
-  
+
   .kategori {
     margin-left: 50px;
     margin-right: 50px;
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .sort-by {
     margin-right: 0;
     justify-content: flex-end;
   }
-  
+
   .produk-info {
     text-align: center;
     margin: 20px 20px -15px 20px;
   }
-  
+
   .container-dt {
     margin: 20px;
     flex-direction: column;
   }
-  
+
   .product-details {
     padding-left: 0;
   }
-  
+
   .carousel-control-prev {
     margin-left: -20px;
   }
-  
+
   .carousel-control-next {
     margin-right: -20px;
   }
 }
 
-/* Tablet (768px and below) */
 @media (max-width: 768px) {
-  .navbar-teks {
-    gap: 15px;
+
+  .navbar-teks li a {
+    position: relative;
+    display: inline-block;
+    transition: color 0.3s ease;
   }
-  
-  .navbar-icon1 {
-    justify-content: center;
+
+  .navbar-teks li a:hover {
+    color: #e30613;
   }
-  
-  .collab-select {
+
+  .navbar-teks li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #e30613;
+    transition: width 0.3s ease-in-out;
+    margin-bottom: 10px;
+  }
+
+  .navbar-teks li a:hover::after {
     width: 100%;
-    justify-content: center;
   }
-  
-  .search-kotak {
+
+  .navbar-teks li ul li a {
+    position: relative;
+    display: inline-block;
+  }
+
+  .navbar-teks li ul li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #e30613;
+    transition: width 0.3s ease-in-out;
+  }
+
+  .navbar-teks li ul li a:hover::after {
     width: 100%;
   }
-  
+
+  .navbar-teks li ul li a:hover {
+    background-color: #f5f5f5;
+    color: #e30613;
+  }
+
+  .produk-info {
+    text-align: right;
+    margin-left: auto;
+    margin-right: 20px;
+    width: fit-content;
+    margin-top: 0px;
+  }
+
+  .navbar {
+    padding: 8px 15px;
+    gap: 10px;
+  }
+
+  .navbar .logo img {
+    width: 90px !important;
+  }
+
   .search-kotak input {
-    width: 100%;
+    width: 120px;
+    font-size: 11px;
   }
-  
-  .landing-page {
-    min-height: 60vh;
-    background-position: center;
+
+  .navbar-icon {
+    gap: 10px;
   }
-  
-  .featured-title {
-    padding-left: 20px;
-    font-size: 1.1rem;
+
+  .navbar-icon1 {
+    gap: 10px;
   }
-  
+
+  .hamburger span {
+    width: 22px;
+    height: 2.5px;
+  }
+
+  .navbar-teks {
+    width: 280px;
+    padding: 70px 20px 30px 20px;
+  }
+
   .featured-container {
     height: 400px;
   }
-  
+
   .featured-container1 {
     height: 280px;
-    margin-top: -20px;
   }
-  
+
   .new-arrivals {
     padding: 5px 20px;
   }
-  
+
   .new-arrivals h2 {
     font-size: 1.2rem;
-    padding-left: 0;
   }
-  
+
   .product-container {
     gap: 15px;
   }
-  
+
   .show-produk {
     width: calc(50% - 15px);
     max-width: 250px;
   }
-  
-  .button-showall {
-    padding: 8px 16px;
-    font-size: 12px;
-  }
-  
+
   .info {
-    padding: 20px 20px;
+    padding: 20px;
     flex-direction: column;
   }
-  
+
   .imgi {
     min-width: auto;
     height: 300px;
   }
-  
+
   .footer {
     padding: 30px 20px;
-    gap: 25px;
     flex-direction: column;
+    gap: 25px;
   }
-  
-  .footer-teks {
-    width: 100%;
-  }
-  
-  .social-icon {
-    gap: 15px;
-  }
-  
-  .footer-bottom-links a {
-    display: inline-block;
-    margin: 5px 8px;
-  }
-  
-  .title-men h3,
-  .title-men p {
-    margin-left: 20px;
-  }
-  
+
   .kategori {
     margin-left: 20px;
     margin-right: 20px;
   }
-  
-  .sort-by {
-    justify-content: flex-start;
-  }
-  
-  .sort-by i {
-    margin-left: 0;
-  }
-  
+
   .detail-produk {
     grid-template-columns: repeat(2, 1fr);
   }
-  
-  .buy-btn {
-    padding: 12px 30px;
-    font-size: 15px;
-  }
-  
-  .detail-zoom {
-    height: 350px;
-    margin-top: 20px;
-  }
-  
-  .carousel-control-prev,
-  .carousel-control-next {
-    opacity: 0.7;
-  }
-  
-  .carousel-control-prev-icon,
-  .carousel-control-next-icon {
-    width: 30px;
-    height: 30px;
-  }
 }
 
-/* Mobile Landscape (576px and below) */
 @media (max-width: 576px) {
+
+  .produk-info {
+    text-align: right;
+    margin-left: auto;
+    margin-right: 20px;
+    width: fit-content;
+    margin-top: 0px;
+  }
+
   .navbar {
-    padding: 10px 15px;
+    padding: 8px 12px;
+    gap: 8px;
   }
-  
-  .navbar img {
-    width: 80px;
+
+  .navbar .logo img {
+    width: 75px !important;
   }
-  
-  .navbar-teks li a {
-    font-size: 12px;
-    padding-bottom: 4px;
+
+  .search-kotak input {
+    width: 100px;
+    font-size: 10px;
   }
-  
+
+  .search-kotak input::placeholder {
+    font-size: 9px;
+  }
+
+  .navbar-icon {
+    gap: 8px;
+  }
+
   .navbar-icon1 {
-    gap: 10px;
+    gap: 8px;
   }
-  
-  .navbar-icon1 a {
-    font-size: 11px;
+
+  .navbar-icon1 a i {
+    width: 16px;
+    height: 16px;
   }
-  
-  .collab-select label,
-  .collab-select select {
-    font-size: 12px;
+
+  .search-kotak button i {
+    width: 14px;
+    height: 14px;
   }
-  
-  .landing-page {
-    min-height: 50vh;
+
+  .hamburger {
+    gap: 4px;
+    padding: 8px;
   }
-  
-  .featured {
-    padding: 30px 0;
+
+  .hamburger span {
+    width: 20px;
+    height: 2.5px;
   }
-  
-  .featured-title {
-    padding-left: 15px;
-    font-size: 1rem;
-    margin-bottom: 10px;
+
+  .navbar-teks {
+    width: 260px;
+    padding: 65px 15px 20px 15px;
   }
-  
+
+  .navbar-teks li a {
+    font-size: 14px;
+    padding: 10px 0;
+  }
+
+  .navbar-teks li ul li a {
+    font-size: 13px;
+  }
+
   .featured-container {
     height: 250px;
-    margin-bottom: -15px;
   }
-  
+
   .featured-container1 {
     height: 200px;
-    margin-top: -10px;
-    margin-bottom: -15px;
   }
-  
+
   .new-arrivals {
     padding: 5px 15px;
   }
-  
+
   .new-arrivals h2 {
     font-size: 1rem;
-    margin-top: 15px;
   }
-  
-  .product-container {
-    gap: 12px;
-  }
-  
+
   .show-produk {
     width: calc(50% - 6px);
   }
-  
+
   .show-teks h3 {
     font-size: 0.75rem;
   }
-  
+
   .harga {
     font-size: 0.85rem;
   }
-  
-  .asli {
-    font-size: 0.7rem;
-  }
-  
-  .diskon {
-    font-size: 0.7rem;
-    padding: 2px 6px;
-  }
-  
-  .love-icon {
-    font-size: 1rem;
-  }
-  
-  .button {
-    height: auto;
-    padding: 15px 0;
-  }
-  
+
   .button-showall {
-    padding: 8px 16px;
-    font-size: 12px;
+    padding: 6px 14px;
+    font-size: 11px;
   }
-  
-  .teks-showall {
-    font-size: 14px;
-  }
-  
+
   .info {
     padding: 15px;
   }
-  
+
   .imgi {
     height: 250px;
-    padding: 15px;
   }
-  
+
   .teks-info h2 {
     font-size: 18px;
   }
-  
+
   .teks-info p {
     font-size: 12px;
   }
-  
-  .teks-info a {
-    font-size: 11px;
-  }
-  
+
   .footer {
     padding: 20px 15px;
   }
-  
+
   .footer-teks h4 {
     font-size: 12px;
   }
-  
+
   .footer-teks ul li {
     font-size: 11px;
   }
-  
+
   .social-icon a {
     font-size: 20px;
   }
-  
-  .footer-bottom {
-    font-size: 10px;
-  }
-  
-  .footer-bottom-links a {
-    font-size: 10px;
-    margin: 0 5px;
-  }
-  
+
   .title-men h3 {
     font-size: 1rem;
     margin-left: 15px;
   }
-  
+
   .title-men p {
     font-size: 0.8rem;
     margin-left: 15px;
   }
-  
+
   .kategori {
     margin-left: 15px;
     margin-right: 15px;
-    margin-top: 20px;
   }
-  
-  .kategori-group select {
-    font-size: 12px;
-    padding: 4px 8px;
-  }
-  
-  .produk-info {
-    font-size: 11px;
-    margin: 15px 15px -10px 15px;
-  }
-  
-  .container-dt {
-    margin: 15px;
-    padding: 15px;
-  }
-  
+
   .detail-produk {
-    gap: 6px;
+    grid-template-columns: 1fr;
   }
-  
-  .product-details h1 {
-    font-size: 16px;
-  }
-  
-  .price {
-    font-size: 18px;
-  }
-  
-  .diskon1 {
-    font-size: 11px;
-  }
-  
-  .size-btns button {
-    padding: 8px 14px;
-    font-size: 12px;
-  }
-  
+
   .buy-btn {
     padding: 10px 20px;
     font-size: 14px;
   }
-  
-  .lope-icon {
-    padding: 10px;
-  }
-  
-  .stars,
-  .stars1 {
-    font-size: 16px;
-  }
-  
-  .review-text,
-  .review-text1 {
-    font-size: 12px;
-  }
-  
-  .product-description h3 {
-    font-size: 14px;
-  }
-  
-  .product-description p,
-  .product-description ul {
-    font-size: 12px;
-  }
-  
-  .detail-zoom {
-    height: 250px;
-  }
-  
-  .carousel-control-prev {
-    margin-left: -10px;
-  }
-  
-  .carousel-control-next {
-    margin-right: -10px;
-  }
-  
-  .carousel-control-prev-icon,
-  .carousel-control-next-icon {
-    width: 25px;
-    height: 25px;
-    background-size: 50%;
-  }
 }
 
-/* Small Mobile (375px and below) */
-@media (max-width: 375px) {
-  .navbar-teks li a {
-    font-size: 10px;
+@media (max-width: 400px) {
+
+  .produk-info {
+    text-align: right;
+    margin-left: auto;
+    margin-right: 20px;
+    width: fit-content;
   }
-  
-  .navbar-icon1 a {
-    font-size: 10px;
+
+  .navbar .logo img {
+    width: 65px !important;
   }
-  
+
   .search-kotak input {
-    font-size: 12px;
+    width: 85px;
   }
-  
-  .featured-container {
-    height: 200px;
+
+  .navbar-icon {
+    gap: 6px;
   }
-  
-  .featured-container1 {
-    height: 160px;
+
+  .navbar-icon1 {
+    gap: 6px;
   }
-  
-  .show-produk {
-    width: 100%;
-    max-width: 280px;
-    margin: 0 auto 10px;
+
+  .hamburger span {
+    width: 18px;
+    height: 2px;
   }
-  
-  .product-container {
-    justify-content: center;
-  }
-  
-  .show-teks h3 {
-    font-size: 0.85rem;
-  }
-  
-  .imgi {
-    height: 220px;
-  }
-  
-  .detail-produk {
-    grid-template-columns: 1fr;
-  }
-  
-  .buy-section {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .buy-btn {
-    width: 100%;
-  }
-  
-  .lope-icon {
-    text-align: center;
-  }
-  
-  .size-btns {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  
-  .size-btns button {
-    margin-top: 0;
-  }
-  
-  .kategori-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .kategori-group select {
-    width: 100%;
-    margin-right: 0;
-  }
-  
-  .sort-by {
-    justify-content: space-between;
-  }
-  
-  .footer-bottom-links a {
-    display: block;
-    margin: 5px 0;
+
+  .navbar-teks {
+    width: 240px;
   }
 }
 
-/* Print Styles */
 @media print {
+
   .navbar,
   .navbar-icon,
   .search-kotak,
-  .collab-select,
   .button,
   .social-icon,
   .carousel-control-prev,
   .carousel-control-next,
   .love-icon,
   .lope-icon,
-  .buy-section {
+  .buy-section,
+  .hamburger {
     display: none;
   }
-  
+
   body {
     font-size: 12pt;
     color: #000;
   }
-  
+
   .product-container {
     page-break-inside: avoid;
   }
-  
+
   .show-produk {
     break-inside: avoid;
   }
